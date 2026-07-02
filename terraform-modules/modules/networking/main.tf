@@ -30,7 +30,7 @@ resource "azurerm_network_security_group" "web_nsg" {
 }
 
 resource "azurerm_subnet_network_security_group_association" "web_nsg_association" {
-  subnet_id                 = azurerm_subnet.web_subnet.id
+  subnet_id                 = azurerm_subnet.subnet.id
   network_security_group_id = azurerm_network_security_group.web_nsg.id
 }
 
