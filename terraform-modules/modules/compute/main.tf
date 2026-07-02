@@ -39,6 +39,6 @@ resource "azurerm_linux_virtual_machine" "web_vm" {
     version   = "latest"
   }
 
-  custom_data = filebase64(var.custom_data_path)
+  custom_data = filebase64("${path.root}/app/app.sh")
   tags        = var.tags
 }
