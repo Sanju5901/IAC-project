@@ -33,12 +33,10 @@ variable "tags" {
   type        = map(string)
 }
 
-variable "ssh_public_key_path" {
-  description = "Path to the SSH public key."
-  type        = string
+variable "ssh_public_key" {
+  type = string
 }
 
-variable "custom_data_path" {
-  description = "Path to the cloud-init script."
-  type        = string
+variable "custom_data" {
+  type = string
 }
