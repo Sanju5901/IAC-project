@@ -1,0 +1,44 @@
+resource "azurerm_network_interface" "web_nic" {
+  for_each            = var.instance_map
+  name                = "${var.resource_name_prefix}-nic${each.key}"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = var.subnet_id
+    private_ip_address_allocation = "Dynamic"
+  }
+}
+
+resource "azurerm_linux_virtual_machine" "web_vm" {
+  for_each            = var.instance_map
+  name                = "${var.resource_name_prefix}-vm${each.key}"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  size                = var.vm_size
+  admin_username      = "azureuser"
+  network_interface_ids = [
+    azurerm_network_interface.web_nic[each.key].id,
+  ]
+
+  admin_ssh_key {
+    username   = "azureuser"
+    public_key = file(var.ssh_public_key_path)
+  }
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "0001-com-ubuntu-server-jammy"
+    sku       = "22_04-lts"
+    version   = "latest"
+  }
+
+  custom_data = filebase64(var.custom_data_path)
+  tags        = var.tags
+}
