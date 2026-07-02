@@ -33,10 +33,10 @@ variable "tags" {
   type        = map(string)
 }
 
-variable "ssh_public_key" {
+variable "ssh_public_key_path" {
   type = string
 }
 
-variable "custom_data" {
+variable "custom_data_path" {
   type = string
 }

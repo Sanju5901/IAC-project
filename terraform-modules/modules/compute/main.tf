@@ -18,14 +18,13 @@ resource "azurerm_linux_virtual_machine" "web_vm" {
   resource_group_name = var.resource_group_name
   size                = var.vm_size
   admin_username      = "azureuser"
-
   network_interface_ids = [
     azurerm_network_interface.web_nic[each.key].id,
   ]
 
   admin_ssh_key {
     username   = "azureuser"
-    public_key = var.ssh_public_key
+    public_key = file(var.ssh_public_key_path)
   }
 
   os_disk {
@@ -40,7 +39,6 @@ resource "azurerm_linux_virtual_machine" "web_vm" {
     version   = "latest"
   }
 
-  custom_data = var.custom_data
-
-  tags = var.tags
+  custom_data = filebase64(var.custom_data_path)
+  tags        = var.tags
 }
