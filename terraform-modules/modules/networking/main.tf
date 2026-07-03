@@ -15,7 +15,7 @@ resource "azurerm_virtual_network" "vnet" {
   tags                = var.tags
 }
 
-resource "azurerm_subnet" "vnet" {
+resource "azurerm_subnet" "subnet" {
   name                 = "sanjay-subnet"
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.vnet.name
