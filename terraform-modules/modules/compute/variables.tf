@@ -34,9 +34,11 @@ variable "tags" {
 }
 
 variable "ssh_public_key_path" {
-  type = string
+  description = "Path to the SSH public key."
+  type        = string
 }
 
 variable "custom_data_path" {
-  type = string
+  description = "Path to the cloud-init script."
+  type        = string
 }
